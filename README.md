@@ -294,6 +294,7 @@ Order Model
   createdAt: {timestamp},
   updatedAt: {timestamp},
 }
+
 Checkout/Order APIs (Authentication and authorization required)
 POST /users/:userId/orders
 Create an order for the user

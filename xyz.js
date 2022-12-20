@@ -1,8 +1,10 @@
 // const validPhone = (x)=>{
-//     const rg = /^[6-9]{1}[0-9]{9}$/
-//     return rg.test(x)
+//     // const rg = /^[6-9]{1}[0-9]{9}$/
+//     // const rg = /^[INR]*$/i
+//     const rg = /^[₹]*$/i
+//     return rg.test(x.trim())
 // }
-// console.log(validPhone("9234567890"))
+// console.log(validPhone("     ₹            "))
 
 const abc= {
     a : {
@@ -14,6 +16,19 @@ const abc= {
         y : 1
     },
 }
+const xyz = {...abc}
+
+console.log(xyz)
+
+// const abc = ["XL" ,"X"]
+// console.log(JSON.parse(abc))
 
 
-console.log(abc[a].p)
+
+
+
+
+
+
+
+
