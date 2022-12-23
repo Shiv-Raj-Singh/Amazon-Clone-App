@@ -1,9 +1,9 @@
 import {Router} from "express";
-import { createProduct, getProductbyfilter, getProductById } from "../controller/productController.js";
+import { createProduct, deleteProduct, getProductbyfilter, getProductById, updateProduct } from "../controller/productController.js";
 import { getUser, login, registerUser, UpdateUser } from "../controller/userController.js";
+import  {createCart, deleteCart, getCart, updateCart}  from "../controller/cartController.js"
 import { authentication } from "../middleware/auth.js";
 import AppError from "../validator/AppError.js";
-import { getProducts } from "../validator/productValidation.js";
 const router = Router()
 export default router
 
@@ -19,8 +19,15 @@ router.put('/user/:userId/profile' ,authentication, UpdateUser)
 router.post('/products' , createProduct)
 router.get('/products' , getProductbyfilter)
 router.get('/products/:productId' , getProductById)
+router.put('/products/:productId' , updateProduct)
+router.delete('/products/:productId' , deleteProduct)
 
+//                    For Cart APIs 
 
+router.post('/users/:userId/cart' , authentication , createCart)
+router.put('/users/:userId/cart' , authentication , updateCart)
+router.get('/users/:userId/cart' , authentication , getCart)
+router.delete('/users/:userId/cart' , authentication , deleteCart)
 
 
 

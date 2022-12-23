@@ -11,7 +11,7 @@ export const authentication = catchAsync((req,res,next)=>{
     jwt.verify(token , process.env.SECRET_KEY , (err , decode)=>{
         if(err){
             if(err.message == "jwt expired") return next(new AppError('Token Expired !' , 400))
-            return next(new AppError('Un-Authonticated Person !' , 400))
+            return next(new AppError('Un-Authonticated Person !' , 401))
         }
         req.decode = decode
         next()

@@ -229,6 +229,7 @@ Cart Model
   createdAt: {timestamp},
   updatedAt: {timestamp},
 }
+
 Cart APIs (authentication required as authorization header - bearer token)
 POST /users/:userId/cart (Add to cart)
 Create a cart for the user if it does not exist. Else add product(s) in cart.

@@ -13,9 +13,7 @@ const globalError = (err , req , res , next)=>{
     if(err.code == 11000){
         err.statusCode = 400
         const values = Object.keys(err.keyValue)
-        for (let i of values){
-            err.message = `Duplicate Key Error For ${i} !`
-        }
+        err.message = `Duplicate Key Error For ${values[0]} !`  
     }
 
     res.status(err.statusCode).json({
