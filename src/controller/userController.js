@@ -34,8 +34,9 @@ export const login = catchAsync(async (req, res, next) => {
     const validData = await loginSchema.validateAsync(req.body)
     if (!validData.email && !validData.phone) return next(new Error(`for Login Enter phone or email !`, 400))
     if (validData.email && validData.phone) return next(new Error(`for Login Enter Only phone or email !`, 400))
-
+    console.log(validData)
     const finduser = await userModel.findOne({ $or: [{ email: validData.email }, { phone: validData.phone }] })
+    // const finduser = await userModel.findOne({email: validData.email})
     if (!finduser) return next(new Error(` No Such User Found !`, 404))
 
     const validPass = await bcrypt.compare(validData.password, finduser.password)

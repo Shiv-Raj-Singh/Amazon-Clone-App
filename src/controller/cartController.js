@@ -2,12 +2,11 @@ import productModel from "../models/productModel.js"
 import cartModel from "../models/cartModel.js"
 import userModel from "../models/userModel.js"
 
-import catchAsync from "./catchAsync.js"
+import catchAsync from "./catchAsync.js" 
 import Error, { sucResponse } from "../validator/AppError.js"
 import { isValidObjectId } from "mongoose"
 
 export const createCart = catchAsync( async(req, res ,next)=>{
-
     const {cartId , productId} = req.body
     if(!isValidObjectId(req.params.userId)) return next(new Error (`InValid User-Id -> ${req.params.userId} !` , 400))
     const user = await userModel.findById(req.params.userId)
@@ -44,8 +43,9 @@ export const createCart = catchAsync( async(req, res ,next)=>{
         cartObj.totalPrice = product.price
         cartObj.totalItems = 1
         const cartData = await cartModel.create(cartObj)
-        return res.status(200).json(new sucResponse("Cart Created Successfully !" , cartData))
+        return res.status(201).json(new sucResponse("Cart Created Successfully !" , cartData))
     }
+
  //  Add To Cart Product if Cart id is Coming __ !
 
     if(!isValidObjectId(cartId)) return next(new Error (`InValid cart-Id -> ${cartId} !` , 400))
@@ -56,13 +56,12 @@ export const createCart = catchAsync( async(req, res ,next)=>{
     const {items} = cart
     items.forEach(a=>{ if( a.productId == productId ) a.quantity = a.quantity + 1  })
     const newProduct = items.find(a => a.productId == productId)
-
     if(!newProduct)  items.push(addProduct)
     cart.items = items
     cart.totalPrice = cart.totalPrice + product.price
     cart.totalItems =  items.length
     cart.save()
-    return res.status(200).json(new sucResponse(" Product Added in Cart Successfully !" , cart))
+    return res.status(201).json(new sucResponse(" Product Added in Cart Successfully !" , cart))
 
 })
 
@@ -146,7 +145,7 @@ export const deleteCart = catchAsync(async(req ,res ,next )=>{
     cart.totalPrice = 0
     cart.totalItems =  0
     cart.save()
-    return res.status(204)
+    return res.status(204).send()
 })
 
 

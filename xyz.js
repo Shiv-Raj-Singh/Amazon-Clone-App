@@ -19,39 +19,36 @@
 // console.log(JSON.parse(abc))
 
 // const arr = "[ 'abc' , 'av' , 'x' ]"
-// const a = arr.split(' ') || arr.split(',')
-// // const a = (arr.split('')[0])
-// console.log(a.length)
+// // const a = arr.split(' ') || arr.split(',')
+// // // const a = (arr.split('')[0])
+// // console.log(a.length)
 
-// const arr = [{
-//     a : "id",
-//     q : "quanity"
-// }]
-// const arr = [{
-//     a : "1",
-//     q : 3
-// }]
-const arr = [ { a: 'xyz', q: 3 }, { a: "abc", q: 5 } ]
-// console.log(arr)
+// // const arr = [{
+// //     a : "id",
+// //     q : "quanity"
+// // }]
+// // const arr = [{
+// //     a : "1",
+// //     q : 3
+// // }]
+// const arr = [ { a: 'xyz', q: 3 }, { a: "abc", q: 5 } ]
+// // console.log(arr)
 
-let obj = {
-    a : 5,
-    q : 1
-}
-const qu = 0
-console.log(qu)
-arr.forEach(x=>{
-    // console.log(x.a , x.q)
-    if(x.a == 'abc'){
-        qu = x.q
-        x.q = x.q+1
-    }
-
-    // else{
-    //     arr.push(obj)
-    // }
-})
-console.log(qu)
+// // let obj = {
+// //     a : 5,
+// //     q : 1
+// // }
+// let qu = 0
+// console.log(qu)
+// // for(let i =0 ; i < arr.length ; i++){
+// //     // console.log()
+// //     qu = qu + arr[i].q
+// // }
+// arr.forEach(x=>{
+//         qu = qu + x.q
+// })
+// console.log(qu)
+console.log(['pending' , 'completed' , 'canceled'].includes(("PENDING").toLowerCase()))
 // console.log(arr)
 // const abc = arr.find(a=> a.a==5)
 // console.log(abc)
