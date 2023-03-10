@@ -35,7 +35,7 @@ export const getProductbyfilter = catchAsync(async (req, res ,next)=>{
         priceLessThan < priceGreaterThan ? next(new Error(`Less than Price ${priceLessThan} less than to Greater than Price ${priceGreaterThan} !` , 400)) : ""
     }
     if(name){
-        obj.title = {$regex : name}    }
+        obj.title = {$regex : name}}
     if(size){
         obj.availableSizes = size}
     if(priceLessThan){
@@ -45,7 +45,7 @@ export const getProductbyfilter = catchAsync(async (req, res ,next)=>{
 
     const data = await productModel.find(obj).sort({price :1})
     if(data.length < 1) return next(new Error(`Products Not found !` , 404))
-    res.status(200).json(new sucResponse('Products found succesfully' , data))
+    res.status(200).json(new sucResponse('Products found successfully' , data))
 })
 
 // *******************************   ********  Get Product By Id *************  **************************
@@ -55,10 +55,10 @@ export const getProductById = catchAsync( async (req,res,next)=>{
     const product = await productModel.findOne({_id : req.params.productId , isDeleted : false})
 
     if(!product) return next(new Error(`Product Not found !` , 404))
-    res.status(200).json(new sucResponse('Product found succesfully' , product))
+    res.status(200).json(new sucResponse('Product found successfully' , product))
 })
 
-// ****************************************************  Update Product **************************************************
+// ****************************************************  Update Product *********************************************
 
 
 export const updateProduct = catchAsync( async (req,res,next)=>{

@@ -1,4 +1,3 @@
-
 // if We Have Any Error then Error Should be Pass in this Class /or Make Instance of This Class 
 
 export default class AppError extends Error{

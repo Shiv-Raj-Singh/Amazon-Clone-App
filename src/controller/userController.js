@@ -9,22 +9,23 @@ import { isValidObjectId } from 'mongoose'
 
 // ********************************************* Register User ***************************************************
 
-export const registerUser = catchAsync(async (req, res, next) => {
+export const registerUser = catchAsync(async (req, res, next) => { 
+    console.log(req.body);
     if (Object.keys(req.body).length < 1) return next(new Error(` No Such Data in body !`, 400))
     if (!req.files || req.files.length < 1) return next(new Error(`Profile-image Must be Present  !`, 400))
     try {
         if(req.body.address && typeof req.body.address !== 'object') req.body.address = JSON.parse(req.body.address)
     } catch (err) {
-        next(new Error('Enter Valid JSON Address !' , 400))
+        next(new Error('Enter Valid JSON Address !' , 400)) 
     }
-    console.log(req.body.address)
-    const url = await upload(req.files[0])
+    // console.log(req.files);
+    const url = await upload(req.body.profileImage)
+    console.log(url);
     req.body.profileImage = url
 
     const validUser = await userValidSchema.validateAsync(req.body)
     const user = await userModel.create(validUser)
-
-    res.status(201).json(new sucResponse('User Registered succesfully', user))
+    res.status(201).json(new sucResponse('User Registered successfully', user))
 })
 
 // ********************************************* login User ***************************************************
@@ -40,7 +41,7 @@ export const login = catchAsync(async (req, res, next) => {
     if (!finduser) return next(new Error(` No Such User Found !`, 404))
 
     const validPass = await bcrypt.compare(validData.password, finduser.password)
-    if (!validPass) return next(new Error(`Incoorect Password !`, 400))
+    if (!validPass) return next(new Error(`Incorrect Password !`, 400))
 
     const payload = { userId: finduser._id, project: 'product-management-system' }
     const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: process.env.EXPIREDIN })

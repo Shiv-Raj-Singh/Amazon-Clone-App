@@ -9,7 +9,8 @@ const globalError = (err , req , res , next)=>{
         if(details.type =='string.pattern.base'){
             err.message =  `${details.path} Should be Valid !`
         }
-    }
+    } 
+    
     if(err.code == 11000){
         err.statusCode = 400
         const values = Object.keys(err.keyValue)
@@ -21,6 +22,6 @@ const globalError = (err , req , res , next)=>{
         message : err.message
     })
 }
-
+   
 
 export default globalError

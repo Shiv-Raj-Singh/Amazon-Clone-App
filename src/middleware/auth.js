@@ -15,5 +15,3 @@ export const authentication = catchAsync((req,res,next)=>{
         next()
     })
 })
-
-

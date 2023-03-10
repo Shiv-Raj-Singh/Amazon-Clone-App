@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv' 
 dotenv.config()
 import express from 'express';
-
+import cors from "cors"
 import './dbConnection/db.js'
 import multer from 'multer';
 import globalError  from './middleware/globalErrorHandler.js';
@@ -11,6 +11,7 @@ const port = process.env.PORT
 
 app.use(express.json())
 app.use(multer().any())
+app.use(cors())
 
 app.use('/' ,routes )
 app.use( globalError )

@@ -1,5 +1,4 @@
 import joi from "joi";
-
 export const userValidSchema = joi.object({
     fname: joi.string().required().trim().regex(/^[a-zA-Z]*$/).min(3).max(25),
     lname: joi.string().required().trim().regex(/^[a-zA-Z]*$/).min(3).max(25),

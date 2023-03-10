@@ -10,12 +10,12 @@ aws.config.update({
 const uploadFile = (file)=>{
     return  new Promise((resolve , reject)=>{
         const s3 = new aws.S3({apiVersion: '2006-03-01'}); 
-
+        let originalname = file
         const fileParams= {
             ACL: "public-read",
             Bucket: "classroom-training-bucket",  //HERE
-            Key: "Profile-Image -project -05 " + file.originalname, //HERE 
-            Body: file.buffer  
+            Key: "Profile-Image -project -05 " + originalname, //HERE 
+            // Body: file.buffer  
         }
         s3.upload(fileParams , (err , data)=>{
             if(err)  return reject(new AppError(err.message , 500))

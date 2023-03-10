@@ -14,13 +14,8 @@ export const createOrder = catchAsync( async(req, res ,next)=>{
     if (req.params.userId !== req.decode.userId) return next(new Error(`Not Authorised !`, 403))
 
     const cart = await cartModel.findOne({userId : req.params.userId}).populate("items.productId" , "title productImage price availableSizes") 
-    if(!cart)  return next(new Error (`Cart Not Found !` , 404))  
+    if(!cart)  return next(new Error (`Cart Not Found For this User !` , 404))  
     if(cart.totalItems == 0 ) return next(new Error (`Cart Have No Product For Order !` , 404)) 
-
-    const orderStatus = await orderModel.findOne({userId : req.params.userId}) 
-    if(orderStatus){
-        if(orderStatus.status == 'pending') return next(new Error (`Your Previous Order in Pending !` , 400))  
-    }
 
     const cartorder = cart._doc
     const order = {...cartorder}
@@ -52,17 +47,17 @@ export const updateOrder = catchAsync(async(req,res,next)=>{
     if(!orderId) return next(new Error (`Enter Order-Id in Body !` , 400))
     if(!isValidObjectId(orderId)) return next(new Error (`InValid Order-Id -> ${orderId} !` , 400))
     if(!status) return next(new Error (`Enter Status in Body !` , 400))
-    if(!['pending' , 'completed' , 'cancled'].includes(status.toLowerCase())) return next(new Error (`InValid Status -> ${status} Status from ['pending' , 'completed' , 'canceled'] !` , 400))
+    if(!['completed' , 'cancled'].includes(status.toLowerCase())) return next(new Error (`InValid Status -> ${status} Status from ['completed' , 'canceled'] !` , 400))
 
-    const order = await orderModel.findById(orderId, {isDeleted : false}).populate("items.productId" , "title productImage price availableSizes")
-    if(!order) return next(new Error (`Order Not Found By Order-Id -> ${orderId} !` , 400))    
-    if(order.userId != req.params.userId )  return next(new Error (`Order User-Id And User-Id Mis-Match !` , 400))  
+    const order = await orderModel.findOne({_id : orderId, isDeleted : false ,status : "pending"}).populate("items.productId" , "title productImage price availableSizes")
+    if(!order) return next(new Error (`Order Not Found By Order-Id -> ${orderId} - Either Order Status is Not Pending !` , 400))    
+    if(order.userId != req.params.userId )  return next(new Error(`Order User-Id And User-Id Mis-Match !` , 400))  
     if(status == 'cancled'){
         if(order.cancellable == false ) return next(new Error('Your Order is Not Cancellable' , 400))
     }
     order.status = status
     order.save()
-
+ 
     return res.status(200).json(new sucResponse("Cart Updated Successfully !" , order))     
 })
 
